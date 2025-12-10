@@ -23,8 +23,11 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: Restore Dependencies and Build Solution
-        run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore
+      - name: Restore dependencies
+        run: dotnet restore SubsequenceFinder.sln
 
-      - name: Run Unit Tests
-        run: dotnet test ${{ env.TEST_PROJECT_PATH }} --configuration ${{ env.BUILD_CONFIG }} --no-build
+      - name: Build
+        run: dotnet build SubsequenceFinder.sln --no-restore --configuration ${{ env.BUILD_CONFIG }}
+
+      - name: Run tests
+        run: dotnet test SubsequenceFinder.sln --no-build --verbosity normal --configuration ${{ env.BUILD_CONFIG }}
