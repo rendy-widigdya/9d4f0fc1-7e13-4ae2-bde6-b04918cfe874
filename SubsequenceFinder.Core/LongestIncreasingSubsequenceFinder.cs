@@ -9,15 +9,16 @@
         /// <returns>The longest sequence</returns>
         public string FindLongestIncreasingSubsequence(string input)
         {
-            if (string.IsNullOrWhiteSpace(input)) {
+            if (string.IsNullOrWhiteSpace(input))
+            {
                 return "";
             }
 
             List<int> longestSequence = [];
             List<int> currentSequence = [];
-            
+
             int[] numbers = ParseInput(input);
-            
+
             foreach (int number in numbers)
             {
                 // if it is the first number or it is greater than the last number in the current increasing sequence
