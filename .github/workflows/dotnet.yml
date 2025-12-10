@@ -35,10 +35,10 @@ jobs:
           --no-build \
           /p:CollectCoverage=true \
           /p:CoverletOutputFormat=cobertura \
-          /p:CoverletOutput=${{ github.workspace }}/coverage/
+          /p:CoverletOutput=${{ github.workspace }}/coverage/coverage-
 
       - name: Display Coverage Summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: ${{ github.workspace }}/coverage/cobertura.xml
+          filename: ${{ github.workspace }}/coverage/coverage-cobertura.xml
           format: "markdown"
