@@ -2,49 +2,79 @@
 {
     public class LongestIncreasingSubsequenceFinder
     {
+        /// <summary>
+        /// Finds the longest increasing subsequence in a string.
+        /// </summary>
+        /// <param name="input">string with numbers separated by white space</param>
+        /// <returns>The longest sequence</returns>
         public string FindLongestIncreasingSubsequence(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) {
                 return "";
             }
 
-            List<int> longestNumbers = [];
-            int currentMaxLength = 0;
-            List<int> increasingNumbers = [];
+            List<int> longestSequence = [];
+            List<int> currentSequence = [];
             
-            int[] numbers;
-            try
-            {
-                numbers = input.Split(' ').Select(int.Parse).ToArray();
-            } catch (FormatException ex)
-            {
-                throw new FormatException("Input contains invalid value.", ex);
-            }
+            int[] numbers = parseInput(input);
             
             for (int i = 0; i < numbers.Length; i++)
             {
-                if(increasingNumbers.Count == 0 || numbers[i] > increasingNumbers.Last())
+                // if it is the first number or it is greater than the last number in the current increasing sequence
+                if (currentSequence.Count == 0 || numbers[i] > currentSequence[^1])
                 {
-                    increasingNumbers.Add(numbers[i]);
+                    currentSequence.Add(numbers[i]);
                 }
+                // else start a new increasing sequence
                 else
                 {
-                    if(increasingNumbers.Count > currentMaxLength)
-                    {
-                        currentMaxLength = increasingNumbers.Count;
-                        longestNumbers = [.. increasingNumbers];
-                    }
-                    increasingNumbers = [numbers[i]];
+                    // check if the current increasing sequence is longer than the longest found so far
+                    updateLongestIfNeeded(ref longestSequence, currentSequence);
+
+                    currentSequence = [numbers[i]];
                 }
             }
 
-            if (increasingNumbers.Count > currentMaxLength)
-            {
-                currentMaxLength = increasingNumbers.Count;
-                longestNumbers = [.. increasingNumbers];
-            }
+            // final check for the last increasing sequence
+            updateLongestIfNeeded(ref longestSequence, currentSequence);
 
-            return string.Join(" ", longestNumbers);
+            return string.Join(" ", longestSequence);
+        }
+
+        /// <summary>
+        /// Updates the longest sequence if the new sequence is longer.
+        /// </summary>
+        /// <param name="longestSequence">Longest sequence</param>
+        /// <param name="currentSequence">New sequence</param>
+        private void updateLongestIfNeeded(ref List<int> longestSequence, List<int> currentSequence)
+        {
+            if (currentSequence.Count > longestSequence.Count)
+            {
+                longestSequence = [.. currentSequence];
+            }
+        }
+
+        /// <summary>
+        /// Parses the input string into an array of integers.
+        /// </summary>
+        /// <param name="input">string with numbers separated by white space</param>
+        /// <returns>Array of parsed integers</returns>
+        /// <exception cref="FormatException">Non integer error</exception>
+        /// <exception cref="OverflowException">Value too big for integer</exception>
+        private int[] parseInput(string input)
+        {
+            try
+            {
+                return input.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            }
+            catch (FormatException ex)
+            {
+                throw new FormatException($"Input contains an invalid value.", ex);
+            }
+            catch (OverflowException ex)
+            {
+                throw new OverflowException($"Input contains a value that is too large", ex);
+            }
         }
     }
 }

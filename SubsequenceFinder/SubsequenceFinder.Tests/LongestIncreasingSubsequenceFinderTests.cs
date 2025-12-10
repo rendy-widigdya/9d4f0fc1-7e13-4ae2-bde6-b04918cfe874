@@ -64,6 +64,7 @@ namespace SubsequenceFinder.Tests
         [InlineData("1", "1")] // single element
         [InlineData("6 5 4 3 2 1", "6")] // decreasing sequence
         [InlineData("1 2 3 4 5 6", "1 2 3 4 5 6")] // increasing sequence
+        [InlineData("1  2  3  1", "1 2 3")] // multiple spaces between numbers
         public void FindLongestIncreasingSubsequence_ShouldHandleEdgeCases(string input, string expected)
         {
             var finder = new LongestIncreasingSubsequenceFinder();
