@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="SubsequenceFinder.Core/SubsequenceFinder.Core.csproj" />
+  <Project Path="SubsequenceFinder.Tests/SubsequenceFinder.Tests.csproj" />
   <Project Path="SubsequenceFinder/SubsequenceFinder.csproj" />
 </Solution>
