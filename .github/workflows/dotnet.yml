@@ -29,5 +29,17 @@ jobs:
       - name: Build
         run: dotnet build SubsequenceFinder.slnx --no-restore --configuration ${{ env.BUILD_CONFIG }}
 
-      - name: Run tests
-        run: dotnet test SubsequenceFinder.slnx --no-build --verbosity normal --configuration ${{ env.BUILD_CONFIG }}
+      - name: Execute Unit Tests and Collect Coverage
+        run:
+          dotnet test SubsequenceFinder.Tests/SubsequenceFinder.Tests.csproj \
+          --configuration ${{ env.BUILD_CONFIG }} \
+          --no-build \
+          /p:CollectCoverage=true \
+          /p:CoverletOutputFormat=cobertura \
+          /p:CoverletOutput=${{ github.workspace }}/coverage/
+
+      - name: Display Coverage Summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ${{ github.workspace }}/coverage/cobertura.xml
+          format: "markdown"
