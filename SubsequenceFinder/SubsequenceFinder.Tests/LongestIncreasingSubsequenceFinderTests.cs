@@ -6,19 +6,35 @@ namespace SubsequenceFinder.Tests
     {
         private const string TestDataFolder = "TestData";
 
-        public static IEnumerable<object[]> AllTestData =>
-            Directory.EnumerateDirectories(Path.Combine(Directory.GetCurrentDirectory(), TestDataFolder))
-                .Select(testCaseDir => new
+        public static IEnumerable<object[]> AllTestData()
+        {
+            var testCases = new List<object[]>();
+
+            string baseDirectory = Path.Combine(Directory.GetCurrentDirectory(), TestDataFolder);
+
+            if (!Directory.Exists(baseDirectory))
+            {
+                return testCases;
+            }
+
+            var testCaseDirectories = Directory.EnumerateDirectories(baseDirectory);
+
+            foreach (var testCaseDir in testCaseDirectories)
+            {
+                string inputPath = Path.Combine(testCaseDir, "Input.txt");
+                string outputPath = Path.Combine(testCaseDir, "Output.txt");
+
+                if (File.Exists(inputPath) && File.Exists(outputPath))
                 {
-                    InputPath = Path.Combine(testCaseDir, "Input.txt"),
-                    OutputPath = Path.Combine(testCaseDir, "Output.txt"),
-                })
-                .Where(fileData => File.Exists(fileData.InputPath) && File.Exists(fileData.OutputPath))
-                .Select(fileData => new object[]
-                {
-                File.ReadAllText(fileData.InputPath).Trim(),
-                File.ReadAllText(fileData.OutputPath).Trim(),
-                });
+                    string input = File.ReadAllText(inputPath).Trim();
+                    string expectedOutput = File.ReadAllText(outputPath).Trim();
+
+                    testCases.Add([input, expectedOutput]);
+                }
+            }
+
+            return testCases;
+        }
 
         [Theory]
         [MemberData(nameof(AllTestData))]
@@ -37,10 +53,31 @@ namespace SubsequenceFinder.Tests
         [InlineData("6 2 4 3 1 5 9", "1 5 9")]
         public void FindLongestIncreasingSubsequence_ShouldHandleSmallInputs(string input, string expected)
         {
-            var finder = new Core.LongestIncreasingSubsequenceFinder();
+            var finder = new LongestIncreasingSubsequenceFinder();
             var output = finder.FindLongestIncreasingSubsequence(input);
 
             Assert.Equal(expected, output);
+        }
+
+        [Theory]
+        [InlineData("", "")] // empty string
+        [InlineData("1", "1")] // single element
+        [InlineData("6 5 4 3 2 1", "6")] // decreasing sequence
+        [InlineData("1 2 3 4 5 6", "1 2 3 4 5 6")] // increasing sequence
+        public void FindLongestIncreasingSubsequence_ShouldHandleEdgeCases(string input, string expected)
+        {
+            var finder = new LongestIncreasingSubsequenceFinder();
+            var output = finder.FindLongestIncreasingSubsequence(input);
+
+            Assert.Equal(expected, output);
+        }
+
+        [Fact]
+        public void FindLongestIncreasingSubsequence_ShouldThrowWhenInputIsInvalid()
+        {
+            var finder = new LongestIncreasingSubsequenceFinder();
+            var input = "1 2 3 bla 4 5";
+            Assert.Throws<FormatException>(() => finder.FindLongestIncreasingSubsequence(input));
         }
     }
 }

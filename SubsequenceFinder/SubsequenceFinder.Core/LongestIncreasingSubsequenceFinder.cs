@@ -4,11 +4,22 @@
     {
         public string FindLongestIncreasingSubsequence(string input)
         {
+            if (string.IsNullOrWhiteSpace(input)) {
+                return "";
+            }
+
             List<int> longestNumbers = [];
             int currentMaxLength = 0;
             List<int> increasingNumbers = [];
             
-            var numbers = input.Split(' ').Select(int.Parse).ToArray();
+            int[] numbers;
+            try
+            {
+                numbers = input.Split(' ').Select(int.Parse).ToArray();
+            } catch (FormatException ex)
+            {
+                throw new FormatException("Input contains invalid value.", ex);
+            }
             
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -30,7 +41,7 @@
             if (increasingNumbers.Count > currentMaxLength)
             {
                 currentMaxLength = increasingNumbers.Count;
-                longestNumbers = increasingNumbers;
+                longestNumbers = [.. increasingNumbers];
             }
 
             return string.Join(" ", longestNumbers);
