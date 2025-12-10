@@ -18,12 +18,12 @@
             
             int[] numbers = ParseInput(input);
             
-            for (int i = 0; i < numbers.Length; i++)
+            foreach (int number in numbers)
             {
                 // if it is the first number or it is greater than the last number in the current increasing sequence
-                if (currentSequence.Count == 0 || numbers[i] > currentSequence[^1])
+                if (currentSequence.Count == 0 || number > currentSequence[^1])
                 {
-                    currentSequence.Add(numbers[i]);
+                    currentSequence.Add(number);
                 }
                 // else start a new increasing sequence
                 else
@@ -31,7 +31,7 @@
                     // check if the current increasing sequence is longer than the longest found so far
                     UpdateLongestIfNeeded(ref longestSequence, currentSequence);
 
-                    currentSequence = [numbers[i]];
+                    currentSequence = [number];
                 }
             }
 
