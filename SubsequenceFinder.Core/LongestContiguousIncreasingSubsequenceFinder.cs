@@ -1,18 +1,16 @@
 ﻿namespace SubsequenceFinder.Core
 {
-    public class LongestIncreasingSubsequenceFinder
+    public class LongestContiguousIncreasingSubsequenceFinder
     {
         /// <summary>
-        /// Finds the longest increasing subsequence in a string.
+        /// Finds the longest contiguous increasing subsequence in a string.
         /// </summary>
         /// <param name="input">string with numbers separated by white space</param>
         /// <returns>The longest sequence</returns>
-        public string FindLongestIncreasingSubsequence(string input)
+        public string FindLongestContiguousIncreasingSubsequence(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
-            {
                 return "";
-            }
 
             List<int> longestSequence = [];
             List<int> currentSequence = [];
@@ -30,14 +28,14 @@
                 else
                 {
                     // check if the current increasing sequence is longer than the longest found so far
-                    UpdateLongestIfNeeded(ref longestSequence, currentSequence);
+                    longestSequence = ChooseLongestSequence(longestSequence, currentSequence);
 
                     currentSequence = [number];
                 }
             }
 
             // final check for the last increasing sequence
-            UpdateLongestIfNeeded(ref longestSequence, currentSequence);
+            longestSequence = ChooseLongestSequence(longestSequence, currentSequence);
 
             return string.Join(" ", longestSequence);
         }
@@ -47,12 +45,12 @@
         /// </summary>
         /// <param name="longestSequence">Longest sequence</param>
         /// <param name="currentSequence">New sequence</param>
-        private static void UpdateLongestIfNeeded(ref List<int> longestSequence, List<int> currentSequence)
+        /// <returns>Longest sequence</returns>
+        private static List<int> ChooseLongestSequence(List<int> longestSequence, List<int> currentSequence)
         {
-            if (currentSequence.Count > longestSequence.Count)
-            {
-                longestSequence = [.. currentSequence];
-            }
+            return currentSequence.Count > longestSequence.Count 
+                ? [.. currentSequence] 
+                : longestSequence;
         }
 
         /// <summary>
@@ -70,7 +68,7 @@
             }
             catch (FormatException ex)
             {
-                throw new FormatException($"Input contains an invalid value.", ex);
+                throw new FormatException($"Input contains an invalid integer value.", ex);
             }
             catch (OverflowException ex)
             {

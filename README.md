@@ -1,10 +1,10 @@
 # SubsequenceFinder
 
-A .NET library for finding the longest increasing subsequence in a string of integers separated by white space.
+A .NET library for finding the longest contiguous increasing subsequence in a string of integers separated by white space.
 
 ## Overview
 
-This project provides functionality to find the longest contiguous increasing subsequence in a string of integers separated by white space with built in exception handling.
+This project provides functionality to find the longest contiguous increasing subsequence in a string of integers separated by white space with built in exception handling. The implementation runs in O(n) time and is fully tested.
 
 ## Features
 
@@ -12,6 +12,10 @@ This project provides functionality to find the longest contiguous increasing su
 - Finds the longest contiguous increasing subsequence
 - Handles edge cases including empty strings, single elements, and invalid input
 - Comprehensive unit test coverage
+- GitHub Actions continuous integration
+- Code formatting with dotnet format
+- Test coverage reporting
+- Dockerfile for containerised execution
 
 ## Requirements
 
@@ -30,7 +34,7 @@ The solution consists of three projects:
 ```csharp
 using SubsequenceFinder.Core;
 
-var finder = new LongestIncreasingSubsequenceFinder();
+var finder = new LongestIncreasingContiguousSubsequenceFinder();
 string input = "6 1 5 9 2";
 string result = finder.FindLongestIncreasingSubsequence(input);
 // result: "1 5 9"
