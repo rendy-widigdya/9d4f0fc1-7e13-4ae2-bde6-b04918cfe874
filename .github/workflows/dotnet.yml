@@ -30,7 +30,8 @@ jobs:
         run: dotnet build SubsequenceFinder.slnx --no-restore --configuration ${{ env.BUILD_CONFIG }}
 
       - name: Execute Unit Tests and Collect Coverage
-        run: dotnet test SubsequenceFinder.slnx \
+        run:
+          dotnet test SubsequenceFinder.Tests/SubsequenceFinder.Tests.csproj \
           --configuration ${{ env.BUILD_CONFIG }} \
           --no-build \
           /p:CollectCoverage=true \
