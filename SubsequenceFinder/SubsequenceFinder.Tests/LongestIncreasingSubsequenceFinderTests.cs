@@ -6,9 +6,9 @@ namespace SubsequenceFinder.Tests
     {
         private const string TestDataFolder = "TestData";
 
-        public static IEnumerable<object[]> AllTestData()
+        public static TheoryData<string, string> AllTestData()
         {
-            var testCases = new List<object[]>();
+            var testCases = new TheoryData<string, string>();
 
             string baseDirectory = Path.Combine(Directory.GetCurrentDirectory(), TestDataFolder);
 
@@ -29,7 +29,7 @@ namespace SubsequenceFinder.Tests
                     string input = File.ReadAllText(inputPath).Trim();
                     string expectedOutput = File.ReadAllText(outputPath).Trim();
 
-                    testCases.Add([input, expectedOutput]);
+                    testCases.Add(input, expectedOutput);
                 }
             }
 

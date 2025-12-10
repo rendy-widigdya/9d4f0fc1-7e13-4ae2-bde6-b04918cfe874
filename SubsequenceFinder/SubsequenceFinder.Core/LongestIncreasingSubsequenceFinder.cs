@@ -16,7 +16,7 @@
             List<int> longestSequence = [];
             List<int> currentSequence = [];
             
-            int[] numbers = parseInput(input);
+            int[] numbers = ParseInput(input);
             
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -29,14 +29,14 @@
                 else
                 {
                     // check if the current increasing sequence is longer than the longest found so far
-                    updateLongestIfNeeded(ref longestSequence, currentSequence);
+                    UpdateLongestIfNeeded(ref longestSequence, currentSequence);
 
                     currentSequence = [numbers[i]];
                 }
             }
 
             // final check for the last increasing sequence
-            updateLongestIfNeeded(ref longestSequence, currentSequence);
+            UpdateLongestIfNeeded(ref longestSequence, currentSequence);
 
             return string.Join(" ", longestSequence);
         }
@@ -46,7 +46,7 @@
         /// </summary>
         /// <param name="longestSequence">Longest sequence</param>
         /// <param name="currentSequence">New sequence</param>
-        private void updateLongestIfNeeded(ref List<int> longestSequence, List<int> currentSequence)
+        private static void UpdateLongestIfNeeded(ref List<int> longestSequence, List<int> currentSequence)
         {
             if (currentSequence.Count > longestSequence.Count)
             {
@@ -61,7 +61,7 @@
         /// <returns>Array of parsed integers</returns>
         /// <exception cref="FormatException">Non integer error</exception>
         /// <exception cref="OverflowException">Value too big for integer</exception>
-        private int[] parseInput(string input)
+        private static int[] ParseInput(string input)
         {
             try
             {
