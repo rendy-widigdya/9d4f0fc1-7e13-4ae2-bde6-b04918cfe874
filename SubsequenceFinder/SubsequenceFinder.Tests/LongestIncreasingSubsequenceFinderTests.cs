@@ -80,5 +80,13 @@ namespace SubsequenceFinder.Tests
             var input = "1 2 3 bla 4 5";
             Assert.Throws<FormatException>(() => finder.FindLongestIncreasingSubsequence(input));
         }
+
+        [Fact]
+        public void FindLongestIncreasingSubsequence_ShouldThrowWhenNumberIsTooBig()
+        {
+            var finder = new LongestIncreasingSubsequenceFinder();
+            var input = "1 9999999999999999999 2";
+            Assert.Throws<OverflowException>(() => finder.FindLongestIncreasingSubsequence(input));
+        }
     }
 }
