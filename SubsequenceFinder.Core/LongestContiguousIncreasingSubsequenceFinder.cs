@@ -48,8 +48,8 @@
         /// <returns>Longest sequence</returns>
         private static List<int> ChooseLongestSequence(List<int> longestSequence, List<int> currentSequence)
         {
-            return currentSequence.Count > longestSequence.Count 
-                ? [.. currentSequence] 
+            return currentSequence.Count > longestSequence.Count
+                ? [.. currentSequence]
                 : longestSequence;
         }
 

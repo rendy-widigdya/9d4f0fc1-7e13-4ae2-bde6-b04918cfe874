@@ -49,6 +49,12 @@ dotnet restore
 dotnet build
 ```
 
+To run the console application:
+
+```bash
+dotnet run --project SubsequenceFinder "6 1 5 9 2"
+```
+
 ## Testing
 
 To run the unit tests:
