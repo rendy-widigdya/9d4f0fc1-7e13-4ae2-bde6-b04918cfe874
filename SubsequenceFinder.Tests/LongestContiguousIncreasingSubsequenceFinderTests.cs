@@ -8,9 +8,9 @@ namespace SubsequenceFinder.Tests
         private readonly LongestContiguousIncreasingSubsequenceFinder _finder = new();
 
 
-        public static TheoryData<string, string> AllTestData()
+        public static TheoryData<string, string, string> AllTestData()
         {
-            var testCases = new TheoryData<string, string>();
+            var testCases = new TheoryData<string, string, string>();
 
             string baseDirectory = Path.Combine(Directory.GetCurrentDirectory(), TestDataFolder);
 
@@ -25,13 +25,14 @@ namespace SubsequenceFinder.Tests
             {
                 string inputPath = Path.Combine(testCaseDir, "Input.txt");
                 string outputPath = Path.Combine(testCaseDir, "Output.txt");
+                string testName = Path.GetFileName(testCaseDir);
 
                 if (File.Exists(inputPath) && File.Exists(outputPath))
                 {
                     string input = File.ReadAllText(inputPath).Trim();
                     string expectedOutput = File.ReadAllText(outputPath).Trim();
 
-                    testCases.Add(input, expectedOutput);
+                    testCases.Add(input, expectedOutput, testName);
                 }
             }
 
@@ -40,11 +41,11 @@ namespace SubsequenceFinder.Tests
 
         [Theory]
         [MemberData(nameof(AllTestData))]
-        public void FindLongestContiguousIncreasingSubsequence_ShouldHandleLargeInputs(string input, string expected)
+        public void FindLongestContiguousIncreasingSubsequence_ShouldHandleLargeInputs(string input, string expected, string testName)
         {
             var output = _finder.FindLongestContiguousIncreasingSubsequence(input);
 
-            Assert.Equal(expected, output);
+            Assert.True(expected == output, $"Test {testName} failed");
         }
 
 

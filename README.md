@@ -34,9 +34,9 @@ The solution consists of three projects:
 ```csharp
 using SubsequenceFinder.Core;
 
-var finder = new LongestIncreasingContiguousSubsequenceFinder();
+var finder = new LongestContiguousIncreasingSubsequenceFinder();
 string input = "6 1 5 9 2";
-string result = finder.FindLongestIncreasingSubsequence(input);
+string result = finder.FindLongestContiguousIncreasingSubsequence(input);
 // result: "1 5 9"
 ```
 
