@@ -40,12 +40,6 @@
             return string.Join(" ", longestSequence);
         }
 
-        /// <summary>
-        /// Updates the longest sequence if the new sequence is longer.
-        /// </summary>
-        /// <param name="longestSequence">Longest sequence</param>
-        /// <param name="currentSequence">New sequence</param>
-        /// <returns>Longest sequence</returns>
         private static List<int> ChooseLongestSequence(List<int> longestSequence, List<int> currentSequence)
         {
             return currentSequence.Count > longestSequence.Count
@@ -53,13 +47,6 @@
                 : longestSequence;
         }
 
-        /// <summary>
-        /// Parses the input string into an array of integers.
-        /// </summary>
-        /// <param name="input">string with numbers separated by white space</param>
-        /// <returns>Array of parsed integers</returns>
-        /// <exception cref="FormatException">Non integer error</exception>
-        /// <exception cref="OverflowException">Value too big for integer</exception>
         private static int[] ParseInput(string input)
         {
             try
